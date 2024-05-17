@@ -46,7 +46,8 @@ if (( CRITICAL_THRESHOLD <= WARNING_THRESHOLD )); then
 fi
 
 # Disk usage
-DISK_PARTITION=$(df -P | awk '0+$5 >= $thresholds {print}')
+# DISK_PARTITION=$(df -P | awk '0+$5 >= $thresholds {print}')
+DISK_PARTITION=$(df -h | awk '{ print $5 }' | grep -v Use | head -n 1 | sed 's/%//')
 
 EXIT_CODE=0
 
