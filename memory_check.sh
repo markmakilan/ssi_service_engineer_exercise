@@ -5,8 +5,6 @@ CRITICAL_THRESHOLD="90"
 WARNING_THRESHOLD="80"
 EMAIL_ADDRESS=""
 
-EXIT_CODE=0
-
 # Print required parameters
 usage() {
     echo "Usage: $0 -c <critical_threshold> -w <warning_threshold> -e <email_address>"
@@ -53,6 +51,8 @@ USED_MEMORY=$(free | grep Mem: | awk '{ print $3 }')
 
 # Computed memory usage
 MEMORY_USAGE=$(( USED_MEMORY * 100 / TOTAL_MEMORY ))
+
+EXIT_CODE=0
 
 # Exit code based on the memory usage
 if (( MEMORY_USAGE >= CRITICAL_THRESHOLD )); then 
