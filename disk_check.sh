@@ -19,15 +19,14 @@ usage() {
 # Show exit code message
 exit_with_info() {
     case $1 in
-        0) echo "$(datetime) Info: Exiting with success (exit code $1)." ;;
-        1) echo "$(datetime) Info: Exiting with warning (exit code $1)." ;;
-        2) echo "$(datetime) Info: Exiting with critical error (exit code $1)." ;;
-        *) echo "$(datetime) Info: Exiting with unknown error." ;;
+        0) echo "$(datetime) Info: exit code $1" ;;
+        1) echo "$(datetime) Info: exit code $1" ;;
+        2) echo "$(datetime) Info: exit code $1" ;;
+        *) echo "$(datetime) Info: unknown error." ;;
     esac
 
     exit $1
 }
-
 
 # Get arguments
 while getopts "c:w:e:" opt; do
