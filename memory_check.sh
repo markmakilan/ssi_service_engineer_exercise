@@ -60,18 +60,18 @@ TOTAL_MEMORY=$(free|grep Mem:|awk '{ print $2 }')
 USED_MEMORY=$(free|grep Mem:|awk '{ print $3 }')
 
 # Computed memory usage
-TOTAL_MEMORY_USAGE=$((USED_MEMORY * 100 / TOTAL_MEMORY ))
+COMPUTED_MEMORY_USAGE=$((USED_MEMORY * 100 / TOTAL_MEMORY ))
 
 EXIT_CODE=0
 
 # Exit code based on the memory usage
-if ((TOTAL_MEMORY_USAGE >= CRITICAL)); then 
+if ((COMPUTED_MEMORY_USAGE >= CRITICAL)); then 
     EXIT_CODE=2
-elif ((TOTAL_MEMORY_USAGE >= WARNING)); then 
+elif ((COMPUTED_MEMORY_USAGE >= WARNING)); then 
     EXIT_CODE=1
 fi
 
 # Print memory usage information
-echo "$(datetime) Info: Memory usage: $TOTAL_MEMORY_USAGE%"
+echo "$(datetime) Info: Memory usage: $COMPUTED_MEMORY_USAGE%"
 
 exit_with_info $EXIT_CODE
