@@ -59,6 +59,6 @@ elif [ "$DISK_PARTITION" >= "$WARNING_THRESHOLD" ]; then
 fi
 
 # Disk usage information
-echo "Info: Disk usage: $DISK_PARTITION"
+echo "Info: Disk usage: $DISK_PARTITION%"
 
 exit_with_info $EXIT_CODE

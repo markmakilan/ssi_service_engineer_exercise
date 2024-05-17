@@ -60,6 +60,6 @@ elif [ "$TOTAL_CPU_USAGE" >= "$WARNING_THRESHOLD" ]; then
 fi
 
 # CPU usage information
-echo "Info: CPU usage: $TOTAL_CPU_USAGE"
+echo "Info: CPU usage: $TOTAL_CPU_USAGE%"
 
 exit_with_info $EXIT_CODE
