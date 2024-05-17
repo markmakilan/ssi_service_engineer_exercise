@@ -17,7 +17,7 @@ exit_with_info() {
         0) echo "Info: Exiting with success (exit code $1)." ;;
         1) echo "Info: Exiting with warning (exit code $1)." ;;
         2) echo "Info: Exiting with critical error (exit code $1)." ;;
-        *) echo "Info: Exiting with unknown error (exit code $1)." ;;
+        *) echo "Info: Exiting with unknown error." ;;
     esac
 
     exit $1
