@@ -62,9 +62,9 @@ TOTAL_CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | \sed "s/.*, *\([0-9.]*\)%* id.*/\1/
 EXIT_CODE=0
 
 # Exit code based on the cpu usage
-if [ "$TOTAL_CPU_USAGE" >= "$CRITICAL" ]; then
+if [ "$TOTAL_CPU_USAGE" -ge "$CRITICAL" ]; then
     EXIT_CODE=2
-elif [ "$TOTAL_CPU_USAGE" >= "$WARNING" ]; then
+elif [ "$TOTAL_CPU_USAGE" -ge "$WARNING" ]; then
     EXIT_CODE=1
 fi
 

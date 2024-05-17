@@ -63,9 +63,9 @@ DISK_PARTITION=$(df -h | awk '{ print $5 }' | grep -v Use | head -n 1 | sed 's/%
 EXIT_CODE=0
 
 # Exit code based on the disk usage
-if [ "$DISK_PARTITION" >= "$CRITICAL" ]; then
+if [ "$DISK_PARTITION" -ge "$CRITICAL" ]; then
     EXIT_CODE=2
-elif [ "$DISK_PARTITION" >= "$WARNING" ]; then
+elif [ "$DISK_PARTITION" -ge "$WARNING" ]; then
     EXIT_CODE=1
 fi
 
