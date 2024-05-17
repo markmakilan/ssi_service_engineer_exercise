@@ -70,6 +70,6 @@ elif [ "$DISK_PARTITION" >= "$WARNING" ]; then
 fi
 
 # Disk usage information
-echo "Info: Disk usage: $DISK_PARTITION%"
+echo "$(datetime) Info: Disk usage: $DISK_PARTITION%"
 
 exit_with_info $EXIT_CODE
