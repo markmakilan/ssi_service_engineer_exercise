@@ -50,7 +50,7 @@ fi
 # CPU usage
 TOTAL_CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | \sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | \awk '{print 100 - $1"%"}')
 
-# Check the CPU usage against the thresholds
+# Exit code based on the cpu usage
 if [ "$TOTAL_CPU_USAGE" >= "$CRITICAL_THRESHOLD" ]; then
     EXIT_CODE=2
 elif [ "$TOTAL_CPU_USAGE" >= "$WARNING_THRESHOLD" ]; then
@@ -59,7 +59,7 @@ else
     EXIT_CODE=0
 fi
 
-# Print CPU usage information
+# CPU usage information
 echo "Info: CPU usage: $TOTAL_CPU_USAGE"
 
 exit_with_info $EXIT_CODE
