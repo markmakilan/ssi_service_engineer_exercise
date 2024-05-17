@@ -19,10 +19,10 @@ usage() {
 # Show exit code message
 exit_with_info() {
     case $1 in
-        0) echo "$(datetime) Info: exit code $1" ;;
-        1) echo "$(datetime) Info: exit code $1" ;;
-        2) echo "$(datetime) Info: exit code $1" ;;
-        *) echo "$(datetime) Info: unknown error." ;;
+        0) echo "$(datetime) Info: Exit code $1" ;;
+        1) echo "$(datetime) Info: Exit code $1" ;;
+        2) echo "$(datetime) Info: Exit code $1" ;;
+        *) echo "$(datetime) Info: Unknown error." ;;
     esac
 
     exit $1
