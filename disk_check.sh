@@ -46,18 +46,18 @@ if (( CRITICAL_THRESHOLD <= WARNING_THRESHOLD )); then
 fi
 
 # Disk usage
-DISK_PARTITION=$(df -h | awk '{ print $5 }' | grep -v Use | head -n 1 | sed 's/%//')
+DISK_PARTITION=$(df -P | awk '0+$5 >= $thresholds {print}')
 
 EXIT_CODE=0
 
 # Exit code based on the disk usage
-if [ "$DISK_USAGE" >= "$CRITICAL_THRESHOLD" ]; then
+if [ "$DISK_PARTITION" >= "$CRITICAL_THRESHOLD" ]; then
     EXIT_CODE=2
-elif [ "$DISK_USAGE" >= "$WARNING_THRESHOLD" ]; then
+elif [ "$DISK_PARTITION" >= "$WARNING_THRESHOLD" ]; then
     EXIT_CODE=1
 fi
 
 # Disk usage information
-echo "Info: Disk usage: $TOTAL_CPU_USAGE"
+echo "Info: Disk usage: $DISK_PARTITION"
 
 exit_with_info $EXIT_CODE
