@@ -7,16 +7,16 @@ EMAIL_ADDRESS=""
 
 EXIT_CODE=0
 
-# Print usage information
+# Print required parameters
 usage() {
-    echo "Usage: $0 -c <critical_threshold> -w <warning_threshold> -e <email_ADDRESS_address>"
+    echo "Usage: $0 -c <critical_threshold> -w <warning_threshold> -e <email_address>"
     exit_with_info 1
 }
 
 # Print the exit code message
 exit_with_info() {
     case $1 in
-        0) echo "Info: Exiting with success (exit code 0$1)." ;;
+        0) echo "Info: Exiting with success (exit code $1)." ;;
         1) echo "Info: Exiting with warning (exit code $1)." ;;
         2) echo "Info: Exiting with critical error (exit code $1)." ;;
         *) echo "Info: Exiting with unknown error (exit code $1)." ;;
@@ -35,7 +35,7 @@ while getopts "c:w:e:" opt; do
     esac
 done
 
-# Check all parameters
+# Check all given parameters
 if [ -z "$CRITICAL_THRESHOLD" ] || [ -z "$WARNING_THRESHOLD" ] || [ -z "$EMAIL_ADDRESS" ]; then
     usage
 fi
@@ -54,7 +54,7 @@ USED_MEMORY=$(free | grep Mem: | awk '{ print $3 }')
 # Computed memory usage
 MEMORY_USAGE=$(( USED_MEMORY * 100 / TOTAL_MEMORY ))
 
-# Determine the exit code based on the memory usage
+# Exit code based on the memory usage
 if (( MEMORY_USAGE >= CRITICAL_THRESHOLD )); then 
     EXIT_CODE=2
 elif (( MEMORY_USAGE >= WARNING_THRESHOLD )); then 
@@ -62,6 +62,6 @@ elif (( MEMORY_USAGE >= WARNING_THRESHOLD )); then
 fi
 
 # Print memory usage information
-echo "Memory usage: $MEMORY_USAGE%"
+echo "Info: Memory usage: $MEMORY_USAGE%"
 
 exit_with_info $EXIT_CODE
