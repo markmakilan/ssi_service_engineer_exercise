@@ -7,7 +7,7 @@ EMAIL=""
 
 # Get current time
 datetime() {
-    return $(date +"%Y-%m-%d %H:%M:%S")
+    echo $(date +"%Y-%m-%d %H:%M:%S")
 }
 
 # Show needed parameters 

@@ -1,49 +1,58 @@
 #!/bin/bash
 
 # Initial value
-CRITICAL_THRESHOLD="90"
-WARNING_THRESHOLD="80"
-EMAIL_ADDRESS=""
+CRITICAL="90"
+WARNING="80"
+EMAIL=""
 
-EXIT_CODE=0
+# Get current time
+datetime() {
+    echo $(date +"%Y-%m-%d %H:%M:%S")
+}
 
-# Print required parameters
+# Show needed parameters 
 usage() {
-    echo "Usage: $0 -c <critical_threshold> -w <warning_threshold> -e <email_address>"
+    echo "$(datetime) Usage: $0 -c <critical threshold> -w <warning threshold> -e <email>"
     exit_with_info 1
 }
 
-# Print the exit code message
+# Show exit code message
 exit_with_info() {
     case $1 in
-        0) echo "Info: Exiting with success (exit code $1)." ;;
-        1) echo "Info: Exiting with warning (exit code $1)." ;;
-        2) echo "Info: Exiting with critical error (exit code $1)." ;;
-        *) echo "Info: Exiting with unknown error." ;;
+        0) echo "$(datetime) Info: Exiting with success (exit code $1)." ;;
+        1) echo "$(datetime) Info: Exiting with warning (exit code $1)." ;;
+        2) echo "$(datetime) Info: Exiting with critical error (exit code $1)." ;;
+        *) echo "$(datetime) Info: Exiting with unknown error." ;;
     esac
 
     exit $1
 }
 
-# Parse arguments
-while getopts "c:w:e:" opt; do
-    case $opt in
-        c) CRITICAL_THRESHOLD=$OPTARG ;;
-        w) WARNING_THRESHOLD=$OPTARG ;;
-        e) EMAIL_ADDRESS=$OPTARG ;;
-        *) usage ;;
-    esac
-done
 
-# Check all given parameters
-if [ -z "$CRITICAL_THRESHOLD" ] || [ -z "$WARNING_THRESHOLD" ] || [ -z "$EMAIL_ADDRESS" ]; then
-    usage
-fi
+# Get arguments
+while getopts "c:w:e:" opt; do
+
+    if [ "$OPTARG" != "" ]; then
+
+        case $opt in
+            c) 
+                CRITICAL=$OPTARG ;;
+            w) 
+                WARNING=$OPTARG ;;
+            e) 
+                EMAIL=$OPTARG ;;
+            *) 
+                usage ;;
+        esac
+    else
+        usage
+    fi
+done
 
 # Validate critical threshold and warning threshold
 # critical threshold must be greater than warning threshold
-if (( CRITICAL_THRESHOLD <= WARNING_THRESHOLD )); then
-    echo "Error: Critical threshold must be greater than warning threshold."
+if (( CRITICAL <= WARNING )); then
+    echo "$(datetime) Error: The critical threshold must be greater than warning threshold."
     usage
 fi
 
@@ -53,13 +62,13 @@ TOTAL_CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | \sed "s/.*, *\([0-9.]*\)%* id.*/\1/
 EXIT_CODE=0
 
 # Exit code based on the cpu usage
-if [ "$TOTAL_CPU_USAGE" >= "$CRITICAL_THRESHOLD" ]; then
+if [ "$TOTAL_CPU_USAGE" >= "$CRITICAL" ]; then
     EXIT_CODE=2
-elif [ "$TOTAL_CPU_USAGE" >= "$WARNING_THRESHOLD" ]; then
+elif [ "$TOTAL_CPU_USAGE" >= "$WARNING" ]; then
     EXIT_CODE=1
 fi
 
 # CPU usage information
-echo "Info: CPU usage: $TOTAL_CPU_USAGE%"
+echo "$(datetime) Info: CPU usage: $TOTAL_CPU_USAGE%"
 
 exit_with_info $EXIT_CODE
