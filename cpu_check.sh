@@ -57,7 +57,7 @@ if (( CRITICAL <= WARNING )); then
 fi
 
 # CPU usage
-TOTAL_CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | \sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | \awk '{print 100 - $1"%"}')
+TOTAL_CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | \sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | \awk '{print 100 - $1}')
 
 EXIT_CODE=0
 
