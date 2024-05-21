@@ -1,0 +1,46 @@
+Prerequisites:
+
+CentOS 7 server with root access
+A valid email account to use for sending emails
+
+Step 1: Update Your System
+
+<sudo yum update -y>
+
+Step 2: Install Postfix and Mailx
+
+<sudo yum install -y postfix cyrus-sasl-plain mailx>
+
+Step 3: Configure Postfix
+
+<sudo nano /etc/postfix/main.cf>
+
+Add the following lines to the file, replacing the placeholders with your own email account details:
+
+relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_CAfile = /etc/ssl/certs/ca-bundle.crt
+
+Create the /etc/postfix/sasl_passwd:
+
+<sudo nano /etc/postfix/sasl_passwd>
+
+Add the following line, replacing the placeholders with your own email account details:
+
+[smtp.gmail.com]:587 youremail@gmail.com:yourpassword
+
+Step 4: Secure the Credentials and Update Postfix
+
+<sudo chown root:root /etc/postfix/sasl_passwd>
+<sudo chmod 600 /etc/postfix/sasl_passwd>
+<sudo postmap /etc/postfix/sasl_passwd>
+
+<sudo systemctl restart postfix>
+<sudo systemctl enable postfix>
+
+Step 5: Test Your Email Configuration
+
+<echo "This is a test body" | mailx -s "Test Email Subject" recipient@example.com>
