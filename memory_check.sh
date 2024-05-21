@@ -80,12 +80,10 @@ elif ((COMPUTED_MEMORY_USAGE >= WARNING)); then
     EXIT_CODE=1
 fi
 
-if (( EXIT_CODE == 2 )); then
-    SUBJECT="$(datetime) memory_check - critical"
-    PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
-    
-    echo "Top 10 Memory Process:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
-fi
+SUBJECT="$(datetime) cpu_check - critical"
+PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
+
+echo -e "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
 
 # Print memory usage information
 echo "$(datetime) Info: Memory usage: $COMPUTED_MEMORY_USAGE%"
