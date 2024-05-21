@@ -61,11 +61,11 @@ TOTAL_CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | \sed "s/.*, *\([0-9.]*\)%* id.*/\1/
 EXIT_CODE=0
 
 # Exit code based on the cpu usage
-if [ "$TOTAL_CPU_USAGE" -ge "$CRITICAL" ]; then
+if (( $(echo "$TOTAL_CPU_USAGE >= $CRITICAL" | bc -l) )); then
     echo -e "Top 10 CPU Process: \n\n $(ps -eo pid,comm,%cpu --sort=-%cpu | head -n 11)" | mailx -s "$(datetime) cpu_check - critical" $EMAIL
     
     EXIT_CODE=2
-elif [ "$TOTAL_CPU_USAGE" -ge "$WARNING" ]; then
+elif (( $(echo "$TOTAL_CPU_USAGE >= $WARNING" | bc -l) ))
     EXIT_CODE=1
 fi
 
