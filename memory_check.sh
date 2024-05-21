@@ -29,7 +29,7 @@ exit_with_info() {
 }
 
 send_email() {
-    echo $1 | mailx -s $2 $EMAIL
+    echo -e $1 | mailx -s $2 $EMAIL
 }
 
 # Get arguments
@@ -70,20 +70,17 @@ EXIT_CODE=0
 
 # Exit code based on the memory usage
 if ((COMPUTED_MEMORY_USAGE >= CRITICAL)); then 
-    SUBJECT="$(datetime) cpu_check - critical"
-    PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
+    # SUBJECT="$(datetime) cpu_check - critical"
+    # PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
     
-    echo -e "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
+    # echo -e "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
+
+    send_email "Top 10 Processes:\n\n$PROCESSES" "$SUBJECT"
 
     EXIT_CODE=2
 elif ((COMPUTED_MEMORY_USAGE >= WARNING)); then 
     EXIT_CODE=1
 fi
-
-SUBJECT="$(datetime) cpu_check - critical"
-PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
-
-echo "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
 
 # Print memory usage information
 echo "$(datetime) Info: Memory usage: $COMPUTED_MEMORY_USAGE%"
