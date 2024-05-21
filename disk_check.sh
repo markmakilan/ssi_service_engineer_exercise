@@ -63,6 +63,10 @@ EXIT_CODE=0
 
 # Exit code based on the disk usage
 if [ "$DISK_PARTITION" -ge "$CRITICAL" ]; then
+    SUBJECT="$(datetime) disk_check - critical"
+    
+    echo "Partition of the Disk:\n\n$(lsblk)" | mailx -s "$SUBJECT" $EMAIL
+
     EXIT_CODE=2
 elif [ "$DISK_PARTITION" -ge "$WARNING" ]; then
     EXIT_CODE=1

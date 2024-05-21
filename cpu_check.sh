@@ -28,6 +28,10 @@ exit_with_info() {
     exit $1
 }
 
+send_email() {
+    echo $1 | mailx -s $2 $EMAIL
+}
+
 # Get arguments
 while getopts "c:w:e:" opt; do
 
@@ -62,6 +66,11 @@ EXIT_CODE=0
 
 # Exit code based on the cpu usage
 if [ "$TOTAL_CPU_USAGE" -ge "$CRITICAL" ]; then
+    SUBJECT="$(datetime) cpu_check - critical"
+    PROCESSES=$(ps -eo pid,comm,%cpu --sort=-%cpu | head -n 11)
+    
+    echo "Top 10 CPU Process:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
+    
     EXIT_CODE=2
 elif [ "$TOTAL_CPU_USAGE" -ge "$WARNING" ]; then
     EXIT_CODE=1
