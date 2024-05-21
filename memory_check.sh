@@ -66,7 +66,7 @@ EXIT_CODE=0
 
 # Exit code based on the memory usage
 if ((COMPUTED_MEMORY_USAGE >= CRITICAL)); then 
-    echo -e "Top 10 Processes: \n\n $(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)" | mailx -s "$(datetime) cpu_check - critical" $EMAIL
+    echo -e "Top 10 Processes: \n\n $(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)" | mailx -s "$(datetime) memory_check - critical" $EMAIL
 
     EXIT_CODE=2
 elif ((COMPUTED_MEMORY_USAGE >= WARNING)); then 
