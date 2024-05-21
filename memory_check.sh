@@ -73,7 +73,7 @@ if ((COMPUTED_MEMORY_USAGE >= CRITICAL)); then
     SUBJECT="$(datetime) cpu_check - critical"
     PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
     
-    echo "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
+    echo -e "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
 
     EXIT_CODE=2
 elif ((COMPUTED_MEMORY_USAGE >= WARNING)); then 

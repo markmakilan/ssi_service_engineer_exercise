@@ -69,7 +69,7 @@ if [ "$TOTAL_CPU_USAGE" -ge "$CRITICAL" ]; then
     SUBJECT="$(datetime) cpu_check - critical"
     PROCESSES=$(ps -eo pid,comm,%cpu --sort=-%cpu | head -n 11)
     
-    echo "Top 10 CPU Process:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
+    echo -e "Top 10 CPU Process:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
     
     EXIT_CODE=2
 elif [ "$TOTAL_CPU_USAGE" -ge "$WARNING" ]; then
