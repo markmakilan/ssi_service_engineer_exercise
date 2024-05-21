@@ -83,7 +83,7 @@ fi
 SUBJECT="$(datetime) cpu_check - critical"
 PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
 
-echo -e "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
+echo "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
 
 # Print memory usage information
 echo "$(datetime) Info: Memory usage: $COMPUTED_MEMORY_USAGE%"
