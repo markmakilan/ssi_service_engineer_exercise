@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Initial value
-CRITICAL=90
-WARNING=80
+CRITICAL=""
+WARNING=""
 EMAIL=""
 
 # Get current time
