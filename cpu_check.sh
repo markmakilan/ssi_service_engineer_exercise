@@ -7,7 +7,7 @@ EMAIL=""
 
 # Get current time
 datetime() {
-    echo $(date +"%Y-%m-%d %H:%M:%S")
+    echo $(date +"%Y%m%d %H:%M")
 }
 
 # Show needed parameters 
@@ -62,10 +62,7 @@ EXIT_CODE=0
 
 # Exit code based on the cpu usage
 if [ "$TOTAL_CPU_USAGE" -ge "$CRITICAL" ]; then
-    SUBJECT="$(datetime) cpu_check - critical"
-    PROCESSES=$(ps -eo pid,comm,%cpu --sort=-%cpu | head -n 11)
-    
-    echo -e "Top 10 CPU Process:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
+    echo -e "Top 10 CPU Process: \n\n $(ps -eo pid,comm,%cpu --sort=-%cpu | head -n 11)" | mailx -s "$(datetime) cpu_check - critical" $EMAIL
     
     EXIT_CODE=2
 elif [ "$TOTAL_CPU_USAGE" -ge "$WARNING" ]; then

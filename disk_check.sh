@@ -7,7 +7,7 @@ EMAIL=""
 
 # Get current time
 datetime() {
-    echo $(date +"%Y-%m-%d %H:%M:%S")
+    echo $(date +"%Y%m%d %H:%M")
 }
 
 # Show needed parameters 
@@ -63,9 +63,7 @@ EXIT_CODE=0
 
 # Exit code based on the disk usage
 if [ "$DISK_PARTITION" -ge "$CRITICAL" ]; then
-    SUBJECT="$(datetime) disk_check - critical"
-    
-    echo -e "Partition of the Disk:\n\n$(lsblk)" | mailx -s "$SUBJECT" $EMAIL
+    echo -e "Partition of the Disk: \n\n $(lsblk)" | mailx -s "$(datetime) disk_check - critical" $EMAIL
 
     EXIT_CODE=2
 elif [ "$DISK_PARTITION" -ge "$WARNING" ]; then
