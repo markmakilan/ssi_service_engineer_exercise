@@ -28,10 +28,6 @@ exit_with_info() {
     exit $1
 }
 
-send_email() {
-    echo -e $1 | mailx -s $2 $EMAIL
-}
-
 # Get arguments
 while getopts "c:w:e:" opt; do
 
@@ -73,9 +69,7 @@ if ((COMPUTED_MEMORY_USAGE >= CRITICAL)); then
     SUBJECT="$(datetime) cpu_check - critical"
     PROCESSES=$(ps -eo pid,comm,%mem --sort=-%mem | head -n 11)
     
-    # echo -e "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
-
-    send_email "Top 10 Processes:\n\n$PROCESSES" "$SUBJECT"
+    echo -e "Top 10 Processes:\n\n$PROCESSES" | mailx -s "$SUBJECT" $EMAIL
 
     EXIT_CODE=2
 elif ((COMPUTED_MEMORY_USAGE >= WARNING)); then 

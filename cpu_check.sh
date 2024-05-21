@@ -28,10 +28,6 @@ exit_with_info() {
     exit $1
 }
 
-send_email() {
-    echo $1 | mailx -s $2 $EMAIL
-}
-
 # Get arguments
 while getopts "c:w:e:" opt; do
 
